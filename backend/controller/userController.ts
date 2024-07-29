@@ -3,8 +3,6 @@ import UserModel from "../model/userModel";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-const app = express();
-
 export const registerUser = async (req : Request, res : Response, next : NextFunction) =>
 {
     try{
@@ -64,7 +62,7 @@ export const login = async(req : Request, res : Response, next : NextFunction) =
             return res.status(400).json({message : "Email or Password in Incorrect"});
         }
 
-        const token = jwt.sign({ _id : user._id }, 'secretkey123' as jwt.Secret, {
+        const token = jwt.sign({ _id : user._id }, process.env.secretKey as jwt.Secret, {
             expiresIn : '1d',
         });
 

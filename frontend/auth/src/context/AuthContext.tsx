@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+
 const AuthContext = createContext<any>(null);
 type AuthContextProviderProps = {
     children : ReactNode
@@ -6,6 +7,7 @@ type AuthContextProviderProps = {
 
 const AuthContextProvider = ({ children } : AuthContextProviderProps) =>
 {
+    
     const [token, setToken] = useState<string | null >(null);
     const [userData, setUserData] = useState <any>(null);
     const [isUserAuthenticated, setUserAuthentication] = useState <boolean>(false);
@@ -27,18 +29,16 @@ const AuthContextProvider = ({ children } : AuthContextProviderProps) =>
                 
                 console.error(error);
             }
-           
         }
         
     },[]);
-
-  
 
     const Login = (newToken: string, newData: any) => {
         localStorage.setItem('user_data', JSON.stringify({ userToken: newToken, user: newData }));
         setToken(newToken);
         setUserData(newData);
         setUserAuthentication(true);
+    
         
       };
     
@@ -65,4 +65,4 @@ console.log(isUserAuthenticated);
 }
 
 const useAuth = () => useContext(AuthContext);
-export {useAuth, AuthContextProvider}
+export {useAuth, AuthContextProvider};

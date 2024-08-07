@@ -4,8 +4,6 @@ import { useAuth } from "../context/AuthContext";
 const RegistrationFormHook = () => {
 
     const { Login } = useAuth();
-
-
     const registerUser = async (data : any) =>
     {
       

@@ -1,44 +1,49 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import "../styles/LoginForm.css";
+import LoginHook from "../hook/LoginHook";
 
-const LoginForm = () =>
-{ 
-    const { Login } = useAuth();
-    const [data, setData] = useState({});
-    const handleChange = (e : any) =>
-    {
+const LoginForm = () => { 
+    const { userLogin } = LoginHook();
+
+    const [data, setData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleChange = (e:any) => {
         setData({
             ...data,
-            [e.target.name] : [e.target.value]
-        })
-    }
+            [e.target.name]: e.target.value
+        });
+    };
 
-    const handleSubmit = (e : any) => {
+    const handleSubmit = (e:any) => {
+        e.preventDefault();
+        userLogin(data);  
         
-        Login(data);  
-    }
-
+    };
 
     return (
-
-       
-
         <div className="LoginFormContainer">
-
-            <form action="" method="post" onSubmit={handleSubmit} className="LoginForm">
-
-                <input type="text" placeholder="Email" onChange={handleChange} name="email"/>
-                
-                <input type="text" placeholder="Password" name="password"/>
-
+            <form onSubmit={handleSubmit} className="LoginForm">
+                <input 
+                    type="text" 
+                    placeholder="Email" 
+                    onChange={handleChange} 
+                    name="email" 
+                    value={data.email}
+                />
+                <input 
+                    type="password" 
+                    placeholder="Password" 
+                    onChange={handleChange} 
+                    name="password" 
+                    value={data.password}
+                />
                 <button type="submit">Submit</button>
-
             </form>
-
-
         </div>
-    )
-}
+    );
+};
 
 export default LoginForm;

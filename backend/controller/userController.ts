@@ -10,17 +10,12 @@ export const registerUser = async (req : Request, res : Response, next : NextFun
         if(user)
         {
             res.status(400).json("User Already exists!");
-        }
-
-        else
-        {
+        } else {
             const { name, email, password, confirmPassword } = req.body;
-            if(password != confirmPassword)
-            {
+            if(password != confirmPassword) {
                 return res.send("Password and Confirm Passoword is no matching");
             }
-            else
-            {
+            else {
                 const hashedPassword = await bcrypt.hash(password, 12);   
                 const newUser = await UserModel.create({
                 name : name,
@@ -43,9 +38,7 @@ export const registerUser = async (req : Request, res : Response, next : NextFun
     } catch (err) {
         console.error(err);
     }
-
 }
-
 
 export const login = async(req : Request, res : Response, next : NextFunction) =>
 {
@@ -66,15 +59,15 @@ export const login = async(req : Request, res : Response, next : NextFunction) =
             expiresIn : '1d',
         });
 
-
         res.status(200).json({
             token : token,
             id : user._id,
             user : user.email,
             message : "You are logged in Succesfully"
-        })
+        });
 
     } catch (err) {
         console.error(err);
     }
+   
 }
